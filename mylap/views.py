@@ -40,7 +40,7 @@ def saveform(request):
         print("save again:")
     return rform(request)
 def editdetails(request,isbn):
-    return render(request,"mb/edit.html", {"book":getBook(isbn)})
+    return render(request,"mylap/edit.html", {"book":getBook(isbn)})
 def getBook(id):
     bookList = Book.objects.filter(id=id)
     book = Book()
@@ -49,20 +49,20 @@ def getBook(id):
         break
     return book
 def edit(request,isbn):
-    return render(request,"mb/edit.html", {"book":getBook(isbn)})
+    return render(request,"mylap/edit.html", {"book":getBook(isbn)})
 
 def search(request):
     #res=Book.objects.all()
     res= Book.objects.filter(Q(ISBN__icontains=request.POST['search']) | Q(title__icontains=request.POST['search']) | Q(author__icontains=request.POST['search']) | Q(edition__icontains=request.POST['search']) | Q(publication__icontains=request.POST['search']) | Q(price__icontains=request.POST['search']))
 
-    return render(request,"mb/lob.html", {"book_list":res,"sort":""})
+    return render(request,"mylap/lob.html", {"book_list":res,"sort":""})
 def price(request):
-    return render(request,"mb/price.html", {})
+    return render(request,"mylap/price.html", {})
 
 def ascen_order(request):
     b=Book.objects.order_by('price')
-    return render(request,"mb/lob.html", {"book_list":b,"sort":"asc"})
+    return render(request,"mylap/lob.html", {"book_list":b,"sort":"asc"})
 
 def decen_order(request):
     b=Book.objects.order_by('-price')
-    return render(request,"mb/lob.html", {"book_list":b,"sort":"Desc"})
+    return render(request,"mylap/lob.html", {"book_list":b,"sort":"Desc"})

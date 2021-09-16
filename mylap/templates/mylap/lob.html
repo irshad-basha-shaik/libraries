@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LOB</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#" > Library </a>
+
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="Active" href="lob">List of Books</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="rform">Book Details</a>
+        </li>
+        <!--li class="nav-item">
+            <a class="nav-link" href="editform">Edit Details</a>
+        </li-->
+    </ul>
+</nav>
+<br>
+<div class="container">
+    <ul class="pagination justify-content-end">
+        {% for o in totalPages %}
+        {% if o.has_previous %}
+        <a href="lob?page=1">&laquo; first</a>
+        <a href="lob?page={{ o.previous_page_number }}">previous</a>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="/lob?pageId={{o}}">{{o}}</a></li>
+        {% endfor %}
+
+
+
+
+        <span class="current">
+            Page {{ o.number }} of {{ o.paginator.totalPages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="lob?pageId={{ o.next_page_number }}">next</a>
+            <a href="lob?pageId={{ o.paginator.totalPages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+        </div>
+
+    </ul>
+</div>
+
+<div class="container">
+    <h2> List of Books</h2>
+    <form class="form-inline" action="/search" method="POST">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+        <table class="table table-bordered">
+            <thead class="thead">
+            <tr>
+                <th scope="col"> ISBN </th>
+                <th scope="col"> Title </th>
+                <th scope="col"> Author </th>
+                <th scope="col"> Edition </th>
+                <th scope="col"> Publication </th>
+                <th>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{sort}} </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="lob">No Sort</a>
+                            <a class="dropdown-item" href="ascen_order">Ascending Order</a>
+                            <a class="dropdown-item" href="decen_order">Descending Order</a>
+                        </div>
+                    </div>
+                <th scope="col"> Edit Details </th>
+            </tr>
+            </thead>
+            {% for book in book_list %}
+            <tbody>
+            <tr>
+                <td>{{ book.ISBN }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{book.author}}</td>
+                <td>{{book.edition}}</td>
+                <td>{{book.publication}}</td>
+                <td>{{book.price}}</td>
+                <td> <a href="edit/{{book.id}}"> Edit</a> </td>
+            </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+
+</div>
+
+</body>
+</html>

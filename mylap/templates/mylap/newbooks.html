@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>New Books</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Library</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="booksmenu">Books Menu</a></li>
+      <li class="active"><a href="newbooks">New Books</a></li>
+      <li><a href="oldbooks">Old Books</a></li>
+      <li><a href="listofbooks">List Of Books</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <h2>Enter The Details Of a Book</h2>
+  <form action="/savebook" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="Title">Enter Title</label>
+      <input type="Title" class="form-control" id="Title" placeholder="Enter Title" name="Title">
+    </div>
+    <div class="form-group">
+      <label for="Author">Enter Author</label>
+      <input type="Author" class="form-control" id="Author" placeholder="Enter Author" name="Author">
+    </div>
+    <div class="form-group">
+      <label for="Edition">Enter Edition</label>
+      <input type="Edition" class="form-control" id="Edition" placeholder="Enter Edition" name="Edition">
+    </div>
+    <div class="form-group">
+      <label for="Publication">Enter Publication</label>
+      <input type="Publication" class="form-control" id="Publication" placeholder="Enter Publication" name="Publication">
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" name="remember"> Remember me</label>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+  {% for book in nb_list %}
+  <li>
+    {{ book.title }}--({{book.author}})--{{book.edition}}--({{book.publication}})
+  </li>
+  {% endfor %}
+</div>
+</body>
+</html>
